@@ -37,12 +37,11 @@ toch2
 
 %idents {[:Letter:]|[:letter:]|_}{[:Letter:]|[:letter:]|_|[:digits:]}
 %keywords
-"если" : If, "еще" : Else, "инес" : Kw_int, "то": Kw_var, "иначе" : Kw_float,"все": Kw_bool,
-"ид" : Kw_char, "завершение" :Kw_string,
-"для ид" : Kw_void, "завершение" : Array, "правда": True, "ложь": False,"пока": Proto,
-"повторяй": Func, "одинаково": Const, "для из": Elif, "и если": Endif,"для": For,
-"в": In,"пока": While, "повтор": Repeat, "покуда": Until, "выйди": Exit,
-"продолжи": Continue, "вывод": Return, "возврат": Read, "ввод":Print
+"если" : If, "иначе" : Else, "цел" : Kw_int, "перем" : Var, "вещ" : Kw_float,"лог" : Kw_bool,
+"симв" : Kw_char, "строка" : Kw_string, "ничто" : Kw_void, "массив" : Array, "истина": True,
+"ложь" : False,"прото" : Proto, "функ" : Func, "конст" : Const, "то" : To, "инес" : Elif, "всё" : Endif,
+"для" : For, "из" : In,"пока" : While, "повторяй" : Repeat, "покуда" : Until, "выйди" : Exit,
+"продолжи" : Continue, "возврат" : Return, "ввод" : Read, "вывод" : Print
 
 %delimiters
 "=" : Equal, "+" : Plus, "-" : Minus, "*" : Mul, "/" : Div, "%": Mod,
@@ -52,7 +51,9 @@ toch2
  "&":BAnd, "~&":BNAnd, "«":LSnift,"»":RSnift,"~":BNot, "**":Pow, "**.":FPow,":=":Assing, "{}":endif_block, "()":begin_block, "#":hesh, "?":cond_op,";":end_expr, ",":enum, "::":after_label,"[]":elem_mass,":":toch2
 
 %strings{"([:ndq:]$write|""$write)*"}
-
+%strings "buffer.clean();":"token.code=(buffer.length()==1)?Char:String;"
+{"([:ndg:]|"")*"}
+{"([:ndq:]$write|""$write)*"}   
 
 %numbers "val_ = 0; token.code = Number;" : "token.int_val = val_;"
 %action addHexDigit "val_ = (val_ « 4) + digitToInt(ch);"
