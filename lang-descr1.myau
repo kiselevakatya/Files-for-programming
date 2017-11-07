@@ -55,11 +55,13 @@ toch2
 {"([:ndg:]|"")*"}
 {"([:ndq:]$write|""$write)*"}   
 
-%numbers "val_ = 0; token.code = Number;" : "token.int_val = val_;"
-%action addHexDigit "val_ = (val_ « 4) + digitToInt(ch);"
-%action addDecDigit "val_ = val_ * 10 + digitToInt(ch);"
-%action addBinDigit "val_ = (val_ « 1) + digitToInt(ch);"
-%action addOctDigit "val_ = (val_ « 3) + digitToInt(ch);"
+% numbers "int_part = 0; frac_part = 1; token.code = Number;" : "token.int_val = int_part;"
 
-{0(x|X)[:xdigits:]$addHexDigit+ | [:digits:]$addDecDigit+ |
-0(b|B)[:bdigits:]$addBinDigit+ | 0(o|O)[:odigits:]$addOctDigit+}
+  % action addDecDigit "frac_part = frac_part * 10 + digit2int (ch)"
+  % action addHexDigit "int_part = (int_part << 4) + digitToInt (ch);"
+  % action addDecDigit "int_part = int_part * 10 + digitToInt (ch);"
+  % action addBinDigit "int_part = (int_part << 1) + digitToInt (ch);"
+  % action addOctDigit "int_part = (int_part << 3) + digitToInt (ch);"
+  {0 (x | X) [: xdigits:] $ addHexDigit + | [: цифры:] $ addDecDigit + | 0 (b | B) [: bdigits:] $ addBinDigit + | 0 (o | O) [: odigits:] $ addOctDigit +} |
+{[: цифры:] ([цифры:]?) * ([: цифры:].? + ((E | е) (+ | -) [: цифры] +)?)}
+ 
