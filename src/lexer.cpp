@@ -6,6 +6,41 @@
 #include <string>
 #include <vector>
 #include "../include/operations_with_sets.h"
+
+  #include <quadmath>
+
+  size_t digit2int(char32_t ch) {
+    size_t v = ch - U'0';
+    return (v<=9)? v : (v&0b1101'1111) - 7;
+  }
+  __int128 setexp(char32_t ch) {
+    return (ch == '-')? -1 : 1;
+  }
+
+  __float128 lexem_code: build_float(){
+    return int_part + fract_part*powq(10,-num_of_digits_in_frac_part)+sign*power;
+  }
+
+  lexem_code precision2code(char32_t ch){
+    switch (ch) {
+      case: 'S':
+        return Single;
+        break;
+      case: 'D':
+        return Double;
+        break;
+      case: 'E':
+        return Extended;
+        break;
+      case: 'Q':
+        return Quatro;
+        break;
+      default:
+        return Single;
+        break;
+    }
+  }
+
 Lexer::Automaton_proc Lexer::procs[] = {
     &Lexer::start_proc(),     &Lexer::unknown_proc(),   
     &Lexer::idkeyword_proc(), &Lexer::delimiter_proc(), 
@@ -140,13 +175,13 @@ static const Keyword_list_elem kwlist[] = {
     {U"для", For},              {U"если", If},               
     {U"из", In},                 {U"иначе", Else},           
     {U"инес", Elif},           {U"истина", True},         
-    {U"конст", Const},        {U"лог", Open_},              
+    {U"конст", Const},        {U"лог", ༠༠},             
     {U"ложь", False},          {U"массив", Array},        
     {U"ничто", Kw_void},      {U"перем", Var},            
     {U"повторяй", Repeat}, {U"пока", While},            
     {U"покуда", Until},      {U"продолжи", Continue}, 
     {U"прото", Proto},        {U"симв", Kw_char},          
-    {U"строка", Kw_string},  {U"то", after_},               
+    {U"строка", Kw_string},  {U"то", ༠༠ },              
     {U"функ", Func},           {U"цел", Kw_int}
 };
 
@@ -271,7 +306,7 @@ static const Elem delim_jump_table[] = {
     {const_cast<char32_t*>(U"&"), Unknown, 19},    
     {const_cast<char32_t*>(U"^"), Unknown, 20},    
     {const_cast<char32_t*>(U""), LNor, 0},         
-    {const_cast<char32_t*>(U""), Char, 0},         
+    {const_cast<char32_t*>(U""), , 0},             
     {const_cast<char32_t*>(U""), LNXor, 0},        
     {const_cast<char32_t*>(U"|"), Bor, 24},        
     {const_cast<char32_t*>(U""), Lor, 0},          

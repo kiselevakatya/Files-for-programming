@@ -1,6 +1,6 @@
 %scaner_name Lexer
 %codes_type lexem_code
-%codes identifier
+
 %ident_name Id
 
 %token_fields
@@ -55,6 +55,42 @@ Single, Double, Extended, Quatro
 
 
 %idents {[:Letter:]|[:letter:]|_}{[:Letter:]|[:letter:]|_|[:digits:]}
+%impl_additions "
+  #include <quadmath>
+
+  size_t digit2int(char32_t ch) {
+    size_t v = ch - U'0';
+    return (v<=9)? v : (v&0b1101'1111) - 7;
+  }
+  __int128 setexp(char32_t ch) {
+    return (ch == '-')? -1 : 1;
+  }
+
+  __float128 lexem_code: build_float(){
+    return int_part + fract_part*powq(10,-num_of_digits_in_frac_part)+sign*power;
+  }
+
+  lexem_code precision2code(char32_t ch){
+    switch (ch) {
+      case: 'S':
+        return Single;
+        break;
+      case: 'D':
+        return Double;
+        break;
+      case: 'E':
+        return Extended;
+        break;
+      case: 'Q':
+        return Quatro;
+        break;
+      default:
+        return Single;
+        break;
+    }
+  }
+"
+
 
 %keywords
 "если" : If, "иначе" : Else, "цел" : Kw_int, "перем" : Var, "вещ" : Kw_float,"лог" : Kw_bool,
