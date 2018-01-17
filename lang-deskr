@@ -1,6 +1,6 @@
 %scaner_name Lexer
 %codes_type lexem_code
-
+%codes identifier
 %ident_name Id
 
 %token_fields
@@ -24,21 +24,21 @@
   f24,    f25,    f26,      f27,      f28,    f29,
 f30, f31,
 
-
-Equal, Plus, Minus,
-Mul, Div, Mod,
-LT, GT, LEQ,
-GEQ, Nequal, FDiv,
-Lor, LNor, LNot,
-LAnd, LNand, LXor,
-LNXor, BXor, BNXor,
-BXor, BNXor, BAnd,
-BNAnd, LShift, RShift,
-BNot, Pow, FPow,
-Assign, endif_block, begin_block,
-cond_op, after_label,elem_mass,
-end_expr, enum, hesh,
-toch2
+Equal,             Plus,               Minus,
+Mul,               Div,                Mod,
+LT,                GT,                 LEQ,
+GEQ,               Nequal,             FDiv,
+Lor,               LNor,               LNot,
+LAnd,              LNand,              LXor,
+LNXor,             Bor,                BNor,
+BXor,              BNXor,              BAnd,
+BNAnd,             LShift,             RShift,
+BNot,              Pow,                FPow,
+Assign,            Open_func,          close_func,
+Open_round,        Close_round,        cond_op,
+after_label,       Open_square,        Close_square,
+Semicolon,         Comma,              Dim_size,
+Colon,
 
 String, If, Float,
 Else, Var, Int,
@@ -51,30 +51,25 @@ Until, Exit, Continue,
 Return, Read, Print,
 Kw_var,Kw_string,Kw_float,
 Kw_int,Kw_char, Kw_void,
-Kw_bool,Kw_string,  Kw_float,
-Kw_int,	Kw_char,    Kw_void,
 Single, Double, Extended, Quatro
 
 
 %idents {[:Letter:]|[:letter:]|_}{[:Letter:]|[:letter:]|_|[:digits:]}
+
 %keywords
 "если" : If, "иначе" : Else, "цел" : Kw_int, "перем" : Var, "вещ" : Kw_float,"лог" : Kw_bool,
 "симв" : Kw_char, "строка" : Kw_string, "ничто" : Kw_void, "массив" : Array, "истина": True,
 "ложь" : False,"прото" : Proto, "функ" : Func, "конст" : Const, "то" : To, "инес" : Elif, "всё" : Endif,
 "для" : For, "из" : In,"пока" : While, "повторяй" : Repeat, "покуда" : Until, "выйди" : Exit,
-"продолжи" : Continue, "возврат" : Return, "ввод" : Read, "вывод" : Print
+"продолжи" : Continue, "возврат" : Return, "ввод": Read, "вывод" : Print
 
 %delimiters
-"=" : Equal, "+" : Plus, "-" : Minus, "*" : Mul, "/" : Div, "%": Mod,
-"<": LT, ">":GT, "<=": LEQ, ">=":GEQ, "!=":Nequal,"/.": FPiv, "||": Lor,
-"!||": LNor, "!":LNot, "&&": LAnd, "!&&": LNAnd, "^^": LXor,
-"!^^": LNXor,"^":BXor,"~^":BNXor,"|":Bor, "~|":BNor,
- "&":BAnd, "~&":BNAnd, "«":LSnift,"»":RSnift,"~":BNot, "**":Pow, "**.":FPow,":=":Assing, "{}":endif_block, "()":begin_block, "#":hesh, "?":cond_op,";":end_expr, ",":enum, "::":after_label,"[]":elem_mass,":":toch2
-
-%strings{"([:ndq:]$write|""$write)*"}
-%strings "buffer.clean();":"token.code=(buffer.length()==1)?Char:String;"
-{"([:ndg:]|"")*"}
-{"([:ndq:]$write|""$write)*"}   
+"=" : Equal, "+" : Plus, "-" : Minus, "*" : Mul, "/" : Div, "%": Mod,"<": LT, ">":GT, 
+"<=": LEQ, ">=":GEQ, "!=":Nequal,"/.": FDiv, "||": Lor,"!||": LNor, "!":LNot, "&&": LAnd, 
+"!&&": LNAnd, "^^": LXor,"!^^": LNXor,"^":BXor,"~^":BNXor,"|":Bor, "~|":BNor,"&":BAnd, 
+"~&":BNAnd, "<<":LShift,">>":RShift,"~":BNot, "**":Pow, "**.":FPow,":=":Assign, 
+"{":Open_func,"}":close_func, "(":Open_round, ")":Close_round,"#":Dim_size, "?":cond_op,
+";":Semicolon,"::":after_label,"[": Open_square,"]":Close_square,":":Colon, ",": Comma
 
 %numbers "int_val = 0; float_val = 0; is_float = false; int_part = 0; fract_part = 0; power = 1; sign = 1;num_of_digits_in_frac_part = 0;token.code = Int;":"
           if(is_float){
