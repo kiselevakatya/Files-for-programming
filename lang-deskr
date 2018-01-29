@@ -23,7 +23,7 @@ LNXor,             Bor,                BNor,
 BXor,              BNXor,              BAnd,
 BNAnd,             LShift,             RShift,
 BNot,              Pow,                FPow,
-Assign,            Open_func,          close_func,
+Assign,            Opening_brace,      Closing_brace,
 Open_round,        Close_round,        cond_op,
 after_label,       Open_square,        Close_square,
 Semicolon,         Comma,              Dim_size,
@@ -34,7 +34,7 @@ Else, Var, Int,
 Bool, Char, Void,
 Array, True, False,
 Proto, Func, Const,
-Elif, Endif, For,
+Elif, Endif, For, End,
 In, While, Repeat,
 Until, Exit, Continue,
 Return, Read, Print,
@@ -60,14 +60,14 @@ return num;}"
 "симв" : Kw_char, "строка" : Kw_string, "ничто" : Kw_void, "массив" : Array, "истина": True,
 "ложь" : False,"прото" : Proto, "функ" : Func, "конст" : Const, "то" : To, "инес" : Elif, "всё" : Endif,
 "для" : For, "из" : In,"пока" : While, "повторяй" : Repeat, "покуда" : Until, "выйди" : Exit,
-"продолжи" : Continue, "возврат" : Return, "ввод": Read, "вывод" : Print
+"продолжи" : Continue, "возврат" : Return, "ввод": Read, "вывод" : Print , "завершение" : End
 
 %delimiters
 "=" : Equal, "+" : Plus, "-" : Minus, "*" : Mul, "/" : Div, "%": Mod,"<": LT, ">":GT, 
 "<=": LEQ, ">=":GEQ, "!=":Nequal,"/.": FDiv, "||": Lor,"!||": LNor, "!":LNot, "&&": LAnd, 
 "!&&": LNAnd, "^^": LXor,"!^^": LNXor,"^":BXor,"~^":BNXor,"|":Bor, "~|":BNor,"&":BAnd, 
 "~&":BNAnd, "<<":LShift,">>":RShift,"~":BNot, "**":Pow, "**.":FPow,":=":Assign, 
-"{":Open_func,"}":close_func, "(":Open_round, ")":Close_round,"#":Dim_size, "?":cond_op,
+"{":Opening_brace,"}":Closing_brace, "(":Open_round, ")":Close_round,"#":Dim_size, "?":cond_op,
 ";":Semicolon,"::":after_label,"[": Open_square,"]":Close_square,":":Colon, ",": Comma
 
 %numbers "int_value = 0; fract_part = 0; exponent = 0;sign_of_degree=1; num_of_digits = 0; is_float = false" : "if(is_float)
@@ -83,9 +83,9 @@ token.int_val = int_value;
 
 %action SetFlag "is_float = true;"
 %action AddDecNumb "int_value = int_value*10 + digit2int(ch);"
-%action AddBinNumb "int_value = (int_value « 1) + digit2int(ch);"
-%action addOctDigit "int_value = (int_value « 3) + digit2int(ch);"
-%action addHexDigit "int_value = (int_value « 4) + digit2int(ch);"
+%action AddBinNumb "int_value = (int_value << 1) + digit2int(ch);"
+%action addOctDigit "int_value = (int_value << 3) + digit2int(ch);"
+%action addHexDigit "int_value = (int_value << 4) + digit2int(ch);"
 %action AddToDegre "exponent = exponent*10 + digit2int(ch);"
 %action AddDecToFract "fract_part = fract_part*10 + digit2int(ch); ++num_of_digits;"
 

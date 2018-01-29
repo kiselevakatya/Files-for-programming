@@ -86,11 +86,11 @@ static const std::map<char32_t, uint32_t> categories_table = {
     {'Щ', 360448}, {'Ъ', 360448}, {'Ы', 360448}, {'Ь', 360448}, 
     {'Э', 360448}, {'Ю', 360448}, {'Я', 360448}, {'а', 622592}, 
     {'б', 360448}, {'в', 688128}, {'г', 622592}, {'д', 688128}, 
-    {'е', 688128}, {'ж', 622592}, {'з', 622592}, {'и', 688128}, 
+    {'е', 688128}, {'ж', 622592}, {'з', 688128}, {'и', 688128}, 
     {'й', 622592}, {'к', 688128}, {'л', 688128}, {'м', 688128}, 
     {'н', 688128}, {'о', 622592}, {'п', 425984}, {'р', 622592}, 
     {'с', 688128}, {'т', 688128}, {'у', 622592}, {'ф', 425984}, 
-    {'х', 360448}, {'ц', 425984}, {'ч', 622592}, {'ш', 360448}, 
+    {'х', 360448}, {'ц', 425984}, {'ч', 622592}, {'ш', 622592}, 
     {'щ', 622592}, {'ъ', 360448}, {'ы', 622592}, {'ь', 622592}, 
     {'э', 360448}, {'ю', 360448}, {'я', 622592}, {'ё', 622592}
 };
@@ -147,23 +147,24 @@ struct Keyword_list_elem{
 };
 
 static const Keyword_list_elem kwlist[] = {
-    {U"ввод", Read},           {U"вещ", Kw_float},           
-    {U"возврат", Return},   {U"всё", Endif},              
-    {U"вывод", Print},        {U"выйди", Exit},           
-    {U"для", For},              {U"если", If},               
-    {U"из", In},                 {U"иначе", Else},           
-    {U"инес", Elif},           {U"истина", True},         
-    {U"конст", Const},        {U"лог", Kw_bool},            
-    {U"ложь", False},          {U"массив", Array},        
-    {U"ничто", Kw_void},      {U"перем", Var},            
-    {U"повторяй", Repeat}, {U"пока", While},            
-    {U"покуда", Until},      {U"продолжи", Continue}, 
-    {U"прото", Proto},        {U"симв", Kw_char},          
-    {U"строка", Kw_string},  {U"то", To},                   
-    {U"функ", Func},           {U"цел", Kw_int}
+    {U"ввод", Read},             {U"вещ", Kw_float},         
+    {U"возврат", Return},     {U"всё", Endif},            
+    {U"вывод", Print},          {U"выйди", Exit},         
+    {U"для", For},                {U"если", If},             
+    {U"завершение", End},  {U"из", In},                 
+    {U"иначе", Else},           {U"инес", Elif},           
+    {U"истина", True},         {U"конст", Const},        
+    {U"лог", Kw_bool},            {U"ложь", False},          
+    {U"массив", Array},        {U"ничто", Kw_void},      
+    {U"перем", Var},            {U"повторяй", Repeat}, 
+    {U"пока", While},            {U"покуда", Until},      
+    {U"продолжи", Continue}, {U"прото", Proto},        
+    {U"симв", Kw_char},          {U"строка", Kw_string},  
+    {U"то", To},                   {U"функ", Func},           
+    {U"цел", Kw_int}
 };
 
-#define NUM_OF_KEYWORDS 28
+#define NUM_OF_KEYWORDS 29
 
 #define THERE_IS_NO_KEYWORD (-1)
 
@@ -263,51 +264,51 @@ struct Elem {
 };
 
 static const Elem delim_jump_table[] = {
-    {const_cast<char32_t*>(U""), Equal, 0},        
-    {const_cast<char32_t*>(U""), Plus, 0},         
-    {const_cast<char32_t*>(U""), Minus, 0},        
-    {const_cast<char32_t*>(U"*"), Mul, 4},         
-    {const_cast<char32_t*>(U"."), Pow, 5},         
-    {const_cast<char32_t*>(U""), FPow, 0},         
-    {const_cast<char32_t*>(U"."), Div, 7},         
-    {const_cast<char32_t*>(U""), FDiv, 0},         
-    {const_cast<char32_t*>(U""), Mod, 0},          
-    {const_cast<char32_t*>(U"=<"), LT, 10},        
-    {const_cast<char32_t*>(U""), LEQ, 0},          
-    {const_cast<char32_t*>(U""), LShift, 0},       
-    {const_cast<char32_t*>(U"=>"), GT, 13},        
-    {const_cast<char32_t*>(U""), GEQ, 0},          
-    {const_cast<char32_t*>(U""), RShift, 0},       
-    {const_cast<char32_t*>(U"=|&^"), LNot, 16},    
-    {const_cast<char32_t*>(U""), Nequal, 0},       
-    {const_cast<char32_t*>(U"|"), Unknown, 18},    
-    {const_cast<char32_t*>(U"&"), Unknown, 19},    
-    {const_cast<char32_t*>(U"^"), Unknown, 20},    
-    {const_cast<char32_t*>(U""), LNor, 0},         
-    {const_cast<char32_t*>(U""), LNAnd, 0},        
-    {const_cast<char32_t*>(U""), LNXor, 0},        
-    {const_cast<char32_t*>(U"|"), Bor, 24},        
-    {const_cast<char32_t*>(U""), Lor, 0},          
-    {const_cast<char32_t*>(U"&"), BAnd, 26},       
-    {const_cast<char32_t*>(U""), LAnd, 0},         
-    {const_cast<char32_t*>(U"^"), BXor, 28},       
-    {const_cast<char32_t*>(U""), LXor, 0},         
-    {const_cast<char32_t*>(U"^|&"), BNot, 30},     
-    {const_cast<char32_t*>(U""), BNXor, 0},        
-    {const_cast<char32_t*>(U""), BNor, 0},         
-    {const_cast<char32_t*>(U""), BNAnd, 0},        
-    {const_cast<char32_t*>(U"=:"), Colon, 34},     
-    {const_cast<char32_t*>(U""), Assign, 0},       
-    {const_cast<char32_t*>(U""), after_label, 0},  
-    {const_cast<char32_t*>(U""), Open_func, 0},    
-    {const_cast<char32_t*>(U""), close_func, 0},   
-    {const_cast<char32_t*>(U""), Open_round, 0},   
-    {const_cast<char32_t*>(U""), Close_round, 0},  
-    {const_cast<char32_t*>(U""), Dim_size, 0},     
-    {const_cast<char32_t*>(U""), cond_op, 0},      
-    {const_cast<char32_t*>(U""), Semicolon, 0},    
-    {const_cast<char32_t*>(U""), Open_square, 0},  
-    {const_cast<char32_t*>(U""), Close_square, 0}, 
+    {const_cast<char32_t*>(U""), Equal, 0},         
+    {const_cast<char32_t*>(U""), Plus, 0},          
+    {const_cast<char32_t*>(U""), Minus, 0},         
+    {const_cast<char32_t*>(U"*"), Mul, 4},          
+    {const_cast<char32_t*>(U"."), Pow, 5},          
+    {const_cast<char32_t*>(U""), FPow, 0},          
+    {const_cast<char32_t*>(U"."), Div, 7},          
+    {const_cast<char32_t*>(U""), FDiv, 0},          
+    {const_cast<char32_t*>(U""), Mod, 0},           
+    {const_cast<char32_t*>(U"=<"), LT, 10},         
+    {const_cast<char32_t*>(U""), LEQ, 0},           
+    {const_cast<char32_t*>(U""), LShift, 0},        
+    {const_cast<char32_t*>(U"=>"), GT, 13},         
+    {const_cast<char32_t*>(U""), GEQ, 0},           
+    {const_cast<char32_t*>(U""), RShift, 0},        
+    {const_cast<char32_t*>(U"=|&^"), LNot, 16},     
+    {const_cast<char32_t*>(U""), Nequal, 0},        
+    {const_cast<char32_t*>(U"|"), Unknown, 18},     
+    {const_cast<char32_t*>(U"&"), Unknown, 19},     
+    {const_cast<char32_t*>(U"^"), Unknown, 20},     
+    {const_cast<char32_t*>(U""), LNor, 0},          
+    {const_cast<char32_t*>(U""), LNAnd, 0},         
+    {const_cast<char32_t*>(U""), LNXor, 0},         
+    {const_cast<char32_t*>(U"|"), Bor, 24},         
+    {const_cast<char32_t*>(U""), Lor, 0},           
+    {const_cast<char32_t*>(U"&"), BAnd, 26},        
+    {const_cast<char32_t*>(U""), LAnd, 0},          
+    {const_cast<char32_t*>(U"^"), BXor, 28},        
+    {const_cast<char32_t*>(U""), LXor, 0},          
+    {const_cast<char32_t*>(U"^|&"), BNot, 30},      
+    {const_cast<char32_t*>(U""), BNXor, 0},         
+    {const_cast<char32_t*>(U""), BNor, 0},          
+    {const_cast<char32_t*>(U""), BNAnd, 0},         
+    {const_cast<char32_t*>(U"=:"), Colon, 34},      
+    {const_cast<char32_t*>(U""), Assign, 0},        
+    {const_cast<char32_t*>(U""), after_label, 0},   
+    {const_cast<char32_t*>(U""), Opening_brace, 0}, 
+    {const_cast<char32_t*>(U""), Closing_brace, 0}, 
+    {const_cast<char32_t*>(U""), Open_round, 0},    
+    {const_cast<char32_t*>(U""), Close_round, 0},   
+    {const_cast<char32_t*>(U""), Dim_size, 0},      
+    {const_cast<char32_t*>(U""), cond_op, 0},       
+    {const_cast<char32_t*>(U""), Semicolon, 0},     
+    {const_cast<char32_t*>(U""), Open_square, 0},   
+    {const_cast<char32_t*>(U""), Close_square, 0},  
     {const_cast<char32_t*>(U""), Comma, 0}
 };
 
@@ -356,7 +357,7 @@ bool Lexer::number_proc(){
                 there_is_jump = true;
             }
              else if(belongs(NUMBER3, char_categories)){
-                int_value = (int_value « 1) + digit2int(ch);
+                int_value = (int_value << 1) + digit2int(ch);
                 state = 1;
                 there_is_jump = true;
             }
@@ -368,7 +369,7 @@ bool Lexer::number_proc(){
                 there_is_jump = true;
             }
              else if(belongs(NUMBER4, char_categories)){
-                int_value = (int_value « 3) + digit2int(ch);
+                int_value = (int_value << 3) + digit2int(ch);
                 state = 2;
                 there_is_jump = true;
             }
@@ -409,7 +410,7 @@ bool Lexer::number_proc(){
                 there_is_jump = true;
             }
              else if(belongs(NUMBER6, char_categories)){
-                int_value = (int_value « 4) + digit2int(ch);
+                int_value = (int_value << 4) + digit2int(ch);
                 state = 5;
                 there_is_jump = true;
             }
@@ -473,7 +474,7 @@ bool Lexer::number_proc(){
             break;
         case 8:
             if(belongs(NUMBER3, char_categories)){
-                int_value = (int_value « 1) + digit2int(ch);
+                int_value = (int_value << 1) + digit2int(ch);
                 state = 1;
                 there_is_jump = true;
             }
@@ -481,7 +482,7 @@ bool Lexer::number_proc(){
             break;
         case 9:
             if(belongs(NUMBER4, char_categories)){
-                int_value = (int_value « 3) + digit2int(ch);
+                int_value = (int_value << 3) + digit2int(ch);
                 state = 2;
                 there_is_jump = true;
             }
@@ -513,7 +514,7 @@ bool Lexer::number_proc(){
             break;
         case 13:
             if(belongs(NUMBER6, char_categories)){
-                int_value = (int_value « 4) + digit2int(ch);
+                int_value = (int_value << 4) + digit2int(ch);
                 state = 5;
                 there_is_jump = true;
             }
