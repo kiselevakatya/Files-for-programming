@@ -41,6 +41,9 @@ Return, Read, Print,
 Kw_bool,Kw_string, Kw_float,
 Kw_int, Kw_char, Kw_void
 
+%strings "buffer.clean();":"token.code=(buffer.length()==1)?Char:String;"
+{"([:ndq:]$write|""$write)*"}
+
 %impl_additions "
 #include <quadmath>
 size_t digit2int(char32_t ch)
